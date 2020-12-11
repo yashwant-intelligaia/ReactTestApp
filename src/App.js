@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Task1 from './component/Task1';
-// import Task2 from './component/Task2';
+import Task2 from './component/Task2';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -28,9 +28,10 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [task, setTask] = React.useState("task1");
+  const [anchorEl, setAnchorEl] = useState(null); //State Hook
+  const [task, setTask] = useState("task1");
   const open = Boolean(anchorEl);
+  const taskList = ['task1', 'task2'];
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,6 +46,21 @@ function App() {
     handleClose();
   }
 
+  var component = <Task1 />
+  switch (task) {
+    case 'task1':
+      component = <Task1 />
+      break;
+
+    case 'task2':
+      component = <Task2 />
+      break;
+
+    default:
+      component = <Task1 />
+      break;
+  }
+
   return (
     <div>
       <AppBar position="static">
@@ -57,15 +73,18 @@ function App() {
             <IconButton aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleMenu} color="inherit">
               <MenuOpenIcon />
             </IconButton>
-            <Menu id="menu-appbar" anchorEl={anchorEl} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} keepMounted transformOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} onClose={handleClose}>
-              <MenuItem onClick={() => selectTask("task1")}>Task1</MenuItem>
-              {/* <MenuItem onClick={()=>selectTask("task2")}>Task2</MenuItem> */}
+            <Menu id="menu-appbar" anchorEl={anchorEl} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} keepMounted transformOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} onClose={handleClose} PaperProps={{ style: { maxHeight: 30 * 4.5, width: '20ch' } }} >
+              {taskList.map((element, index) => {
+                return <MenuItem key={index} onClick={() => selectTask(element)}>{element}</MenuItem>
+              })}
             </Menu>
           </div>
         </Toolbar>
       </AppBar>
       {/* {task === "task1" ? <Task1 /> : <Task2 />} */}
-      <Task1 />
+
+      {/* <Task1 /> */}
+      {component}
     </div>
   );
 }
