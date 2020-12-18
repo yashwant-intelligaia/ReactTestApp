@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Task1 from './component/Task1';
 import Task2 from './component/Task2';
+import Task3 from './component/Task3';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -10,7 +11,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { makeStyles } from '@material-ui/core/styles';
-import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   selectTask: {
     width: 200
@@ -31,7 +32,7 @@ function App() {
   const [anchorEl, setAnchorEl] = useState(null); //State Hook
   const [task, setTask] = useState("task1");
   const open = Boolean(anchorEl);
-  const taskList = ['task1', 'task2'];
+  const taskList = ['task1', 'task2', 'task3'];
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,6 +55,10 @@ function App() {
 
     case 'task2':
       component = <Task2 />
+      break;
+    
+    case 'task3':
+      component = <Task3/>
       break;
 
     default:
@@ -81,15 +86,17 @@ function App() {
           </div>
         </Toolbar>
       </AppBar>
-      <Router>
+      {component}
+      {/* <Router>
         <Switch>
           <Route exact path="/">
-            <Redirect strict from="/" to="/task1"/>
+            <Redirect strict from="/" to="/task1" />
           </Route>
           <Route path="/task1" component={Task1}></Route>
           <Route path="/task2" component={Task2}></Route>
+          <Route path="/task3" component={Task3}></Route>
         </Switch>
-      </Router>
+      </Router> */}
     </div>
   );
 }
