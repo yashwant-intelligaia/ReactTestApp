@@ -11,7 +11,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { makeStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect, useHistory } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   selectTask: {
     width: 200
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null); //State Hook
   const [task, setTask] = useState("task1");
@@ -43,7 +44,9 @@ function App() {
   };
 
   const selectTask = (val) => {
-    setTask(val);
+    // setTask(val);
+console.log('val=>',val);
+    history.push("/task2");
     handleClose();
   }
 
@@ -86,8 +89,8 @@ function App() {
           </div>
         </Toolbar>
       </AppBar>
-      {component}
-      {/* <Router>
+      {/* {component} */}
+      <Router>
         <Switch>
           <Route exact path="/">
             <Redirect strict from="/" to="/task1" />
@@ -96,7 +99,7 @@ function App() {
           <Route path="/task2" component={Task2}></Route>
           <Route path="/task3" component={Task3}></Route>
         </Switch>
-      </Router> */}
+      </Router>
     </div>
   );
 }
